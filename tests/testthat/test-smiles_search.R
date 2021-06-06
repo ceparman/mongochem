@@ -15,6 +15,7 @@ test_that("similarity search works", {
 
 
 
+
 test_that("substructure search works", {
 
   smiles <- "CC(=O)OC1=CC=CC=C1C(=O)O"
