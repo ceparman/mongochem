@@ -65,11 +65,11 @@ documents <-  foreach::foreach(i =1:length(sdfset),.packages=c("rcdk","jsonlite"
 
 document <- jsonlite::toJSON(list(  id =  pubchem_id[i],
                                     id_type = "PubChem",
-                            smiles =  smiles[i],
-                            mfp_bits = mfp_bits,
-                            mfp_count = mfp_count,
-                            collection = collection ,
-                            sdfstr = ChemmineR::sdf2str(sdfset[[i]])
+                                    smiles =  smiles[i],
+                                    mfp_bits = mfp_bits,
+                                    mfp_count = mfp_count,
+                                    collection = collection ,
+                                    sdfstr = ChemmineR::sdf2str(sdfset[[i]])
                         ),auto_unbox = T
                   )
 
