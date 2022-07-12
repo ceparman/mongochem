@@ -9,7 +9,9 @@
 #' @param max_mismatches max number of mismatched fingerprint bits
 #' @param threshold %overlap required for inital search
 #' @param  au=2 parameter for fmcsBatch final similarity
+#' @param  a1=0 parameter for fmcsBatch final similarity
 #' @param  bu=1 parameter for fmcsBatch final similarity
+#' @param  bl=0 parameter for fmcsBatch final similarity
 #' @param numParallel number of processors parameter for fmcsBatch final similarity
 #' @return data frame with Query_Size,Target_Size,MCS_Size,Tanimoto_Coefficient,Overlap_Coefficient,id
 #' @export
@@ -29,7 +31,13 @@
 
 smiles_substructure_search <- function(sim_db,smiles,max_mismatches = 2, threshold = .85,
                                        min_overlap_coefficient = .8,
-                                       au=2, bu=1,numParallel = 5){
+                                       al=0,au=2,bl =0, bu=1,numParallel = 2){
+  print("local")
+  print(paste(smiles,max_mismatches, threshold,
+              min_overlap_coefficient,
+              al,au,bl, bu,numParallel))
+
+
 
      mols <- rcdk::parse.smiles(smiles)
 
@@ -59,15 +67,20 @@ smiles_substructure_search <- function(sim_db,smiles,max_mismatches = 2, thresho
 
 
 
+  if(nrow(a) < 1){ return(data.frame(Message = "No results")) } else{
+
     sdfset<- suppressWarnings( ChemmineR::smiles2sdf(a$smiles))
 
-    similarities <-as.data.frame(  fmcsR::fmcsBatch( ChemmineR::smiles2sdf(smiles),sdfset,au=2, bu=1,numParallel = 5))
+    similarities <-as.data.frame(  fmcsR::fmcsBatch( ChemmineR::smiles2sdf(smiles),sdfset),
+                                    al=al,au=au, bl=bl,bu=bu,numParallel = numParallel)
 
 
     similarities$id <- a$id
 
-    final_set <-   magrittr::`%>%`(  similarities,  dplyr::filter(Overlap_Coefficient >=  min_overlap_coefficient))
+    final_set <-   similarities |>   dplyr::filter(Overlap_Coefficient >=  min_overlap_coefficient)
 
-    final_set
 
+    print(final_set)
+    return(final_set)
+}
 }

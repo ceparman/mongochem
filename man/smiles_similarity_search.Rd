@@ -27,7 +27,7 @@ Similarity search using smiles
 
 smiles <- "CC(=O)OC1=CC=CC=C1C(=O)O"
 
-sim_db <- mongolite::mongo(db="chemdb",url = "mongodb://localhost:27017" ,collection = "similarity")
+sim_db <- mongolite::mongo(db="chemdb",url = "mongodb://localhost:27017" ,collection = "molecules")
 
 counts_db <- mongolite::mongo(db="chemdb",url = "mongodb://localhost:27017" ,collection = "mfp_counts")
 smiles_similarity_search(sim_db,counts_db,smiles, threshold = 0.7)
