@@ -32,10 +32,6 @@
 smiles_substructure_search <- function(sim_db,smiles,max_mismatches = 2, threshold = .85,
                                        min_overlap_coefficient = .8,
                                        al=0,au=2,bl =0, bu=1,numParallel = 2){
-  print("local")
-  print(paste(smiles,max_mismatches, threshold,
-              min_overlap_coefficient,
-              al,au,bl, bu,numParallel))
 
 
 
@@ -75,7 +71,7 @@ smiles_substructure_search <- function(sim_db,smiles,max_mismatches = 2, thresho
                                     al=al,au=au, bl=bl,bu=bu,numParallel = numParallel)
 
 
-    similarities$id <- a$id
+    similarities$id <- a$`_id`
 
     final_set <-   similarities |>   dplyr::filter(Overlap_Coefficient >=  min_overlap_coefficient)
 

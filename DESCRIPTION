@@ -23,4 +23,5 @@ Imports:
     mongolite,
     foreach,
     doParallel,
-    readr
+    readr,
+    rJava
